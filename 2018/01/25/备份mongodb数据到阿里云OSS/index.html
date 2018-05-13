@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://navyran.github.io">
-  <title>Archives: 2016 | 小小的梦想</title>
+  <title>小小的梦想</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="备份mongodb数据到阿里云OSS先备份库1234567rm -rf ./mongo_data# 将mongodb的数据库的某个集合备份到指定文件夹# 无认证的话，就不需要用户名密码了# 指定库和集合主要是内容多，分开备份快些，不指定集合的话就是全库备份mongodump -h 127.0.0.1:27017 -u username -p password --db=dbname --colle">
+<meta property="og:type" content="article">
 <meta property="og:title" content="小小的梦想">
-<meta property="og:url" content="https://navyran.github.io/archives/2016/index.html">
+<meta property="og:url" content="https://navyran.github.io/2018/01/25/备份mongodb数据到阿里云OSS/index.html">
 <meta property="og:site_name" content="小小的梦想">
+<meta property="og:description" content="备份mongodb数据到阿里云OSS先备份库1234567rm -rf ./mongo_data# 将mongodb的数据库的某个集合备份到指定文件夹# 无认证的话，就不需要用户名密码了# 指定库和集合主要是内容多，分开备份快些，不指定集合的话就是全库备份mongodump -h 127.0.0.1:27017 -u username -p password --db=dbname --colle">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-01-25T16:05:53.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小小的梦想">
+<meta name="twitter:description" content="备份mongodb数据到阿里云OSS先备份库1234567rm -rf ./mongo_data# 将mongodb的数据库的某个集合备份到指定文件夹# 无认证的话，就不需要用户名密码了# 指定库和集合主要是内容多，分开备份快些，不指定集合的话就是全库备份mongodump -h 127.0.0.1:27017 -u username -p password --db=dbname --colle">
   
     <link rel="alternative" href="/atom.xml" title="小小的梦想" type="application/atom+xml">
   
@@ -150,43 +154,157 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-备份mongodb数据到阿里云OSS" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
       
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2016" class="archive-year">2016</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2016/03/14/使用ruby做支付宝的MD5、RSA签名和验签/" class="archive-article-date">
-  	<time datetime="2016-03-14T10:16:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-03-14</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        <h1 id="备份mongodb数据到阿里云OSS"><a href="#备份mongodb数据到阿里云OSS" class="headerlink" title="备份mongodb数据到阿里云OSS"></a>备份mongodb数据到阿里云OSS</h1><h2 id="先备份库"><a href="#先备份库" class="headerlink" title="先备份库"></a>先备份库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ./mongo_data</span><br><span class="line"># 将mongodb的数据库的某个集合备份到指定文件夹</span><br><span class="line"># 无认证的话，就不需要用户名密码了</span><br><span class="line"># 指定库和集合主要是内容多，分开备份快些，不指定集合的话就是全库备份</span><br><span class="line">mongodump -h 127.0.0.1:27017 -u username -p password --db=dbname --collection=coll -o ./mongo_data</span><br><span class="line"></span><br><span class="line">tar -zvcf ./dist/mongo_data.tar.gz ./mongo_data</span><br></pre></td></tr></table></figure>
+<h2 id="上传到oss存储："><a href="#上传到oss存储：" class="headerlink" title="上传到oss存储："></a>上传到oss存储：</h2><p>oss的操作客户端挺多，感觉还是osscmd好用些</p>
+<p>osscmd下载和使用指导：<a href="https://bbs.aliyun.com/read/108613.html?spm=5176.10695662.1996646101.searchclickresult.7a25878284ioHn" target="_blank" rel="noopener">https://bbs.aliyun.com/read/108613.html?spm=5176.10695662.1996646101.searchclickresult.7a25878284ioHn</a></p>
+<p>先设置好账号秘钥：<br><code>python osscmd config --id=fOl5hXAXrpxxxxxx --key=QPTCb6PGun2jcyOuC9s2WJxxxxxxxxxx</code></p>
+<p>秘钥到这里获取：<a href="https://ak-console.aliyun.com/?spm=5176.8466010.0.0.4f20f555lP4iC7#/accesskey" target="_blank" rel="noopener">https://ak-console.aliyun.com/?spm=5176.8466010.0.0.4f20f555lP4iC7#/accesskey</a></p>
+<p>然后上传：</p>
+<p><code>python osscmd put /home/admin/dist/mongo_data.tar.gz oss://navyran/mongo_data/2018-01-26/ --host=oss-cn-shanghai.aliyuncs.com</code></p>
+<p>host地址可以参看你建立的bucket的endpoint地址。<br>如果备份服务器是在阿里云内网，直接用内网地址会很快。</p>
 
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://navyran.github.io/2018/01/25/备份mongodb数据到阿里云OSS/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/05/04/Java常用框架及中间件方案/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2016/03/14/使用ruby做支付宝的MD5、RSA签名和验签/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -209,8 +327,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
